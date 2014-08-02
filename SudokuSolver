@@ -4,42 +4,26 @@ import java.lang.Character;
 
 public class SudokuSolver {
 
-	//create a Sudoku-grid
-	private int[][] Sudoku = new int[15][15]; 
+//create a Sudoku-grid
+private int[][] Sudoku = new int[15][15]; 
 	
-	public static void main(String[] args){
-		//we create a SudokuSolver-object and print + solve it
-		SudokuSolver Sudoku3 = new SudokuSolver();
-		System.out.println("The Solved Sudoku: ");
+public static void main(String[] args){
+//we create a SudokuSolver-object and print + solve it
+SudokuSolver Sudoku3 = new SudokuSolver();
+System.out.println("The Solved Sudoku: ");
 		
-		//the solving of the Sudoku
-		Sudoku3.solver(0,0);
-	}
+//the solving of the Sudoku
+Sudoku3.solver(0,0);
+}
 	
-	public SudokuSolver(){
+public SudokuSolver(){
 	
-	//Firstly, we will fill the Sudoku with zero's. This means the Sudoku is empty
-		for(int i=0; i < 9; i++){
-			for(int j=0; j < 9; j++){
-				Sudoku[j][i] = 0;
-			}
-		}
-	
-		//We fill in some numbers in the Sudoku
-		Sudoku[1][0]=8;         Sudoku[1][3]=9;
-		Sudoku[6][0]=2;         Sudoku[2][3]=7;
-	  Sudoku[4][1]=8;         Sudoku[7][3]=8;    //Sudoku[8][1]=6;
-		Sudoku[5][1]=4;         Sudoku[0][4]=8;
-		Sudoku[7][1]=9;         Sudoku[3][4]=9;    //Sudoku[6][2]=1;
-		Sudoku[2][2]=6;         Sudoku[5][4]=3;
-		Sudoku[3][2]=3;         Sudoku[8][4]=2;
-		Sudoku[4][2]=2;         Sudoku[1][5]=1;
-		Sudoku[7][2]=1;         Sudoku[6][5]=9;
-		Sudoku[7][5]=5;         Sudoku[1][7]=3;
-		Sudoku[1][6]=7;         Sudoku[3][7]=7;
-		Sudoku[4][6]=4;         Sudoku[4][7]=1;
-		Sudoku[5][6]=5;         Sudoku[2][8]=8;
-		Sudoku[6][6]=8;         Sudoku[7][8]=4;
-		
+//Firstly, we will fill the Sudoku with zero's. This means the Sudoku is empty
+for(int i=0; i < 9; i++){
+for(int j=0; j < 9; j++){
+Sudoku[j][i] = 0;
+}
+}
+}
 	
 	
