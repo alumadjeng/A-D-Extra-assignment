@@ -2,119 +2,65 @@ import java.io.*;
 import java.util.*;
 import java.lang.Character;
 
-public class SudokuSolver {
+public class SudokuSolver{
 
-	//create a Sudoku-grid
-	private int[][] Sudoku = new int[15][15]; 
-		
-	public static void main(String[] args){
-		//we create a SudokuSolver-object and print + solve it
-		SudokuSolver Sudoku3 = new SudokuSolver();
-		System.out.println("The Solved Sudoku: ");
-				
-		//the solving of the Sudoku
-		Sudoku3.solver(0,0);
+	private int[][] Sudoku=new int[15][15];
+
+	public static void main(String[] args) {
+	//Eerst wordt de Sudoku aangemaakt en uitgeprint en daarna wordt de Sudoku opgelost.
+	SudokuSolver Sud1 = new SudokuSolver();
+	System.out.println("De opgeloste sudoku:");
+	
+	//Oplossen Sudoku
+	Sud1.solver(0,0);
+	
 	}
-		
+
 	public SudokuSolver(){
-			
-		//Firstly, we will fill the Sudoku with zero's. This means the Sudoku is empty
-		for(int i=0; i < 9; i++){
-			for(int j=0; j < 9; j++){
-			Sudoku[j][i] = 0;
+		
+		//Eerst wordt de Sudoku gevuld met nullen
+		for(int i=0; i<9; i++){
+			for(int j=0; j<9; j++){
+				Sudoku[j][i]=0;
 			}
 		}
+		//Vervolgens vullen we een paar cijfers in, de plekken waar er nul blijft staan, zijn de plekken die nog ingevuld moeten worden door de solver
+		Sudoku[1][0]=8; Sudoku[1][3]=9;
+		Sudoku[6][0]=2; Sudoku[2][3]=7;
+		Sudoku[4][1]=8; Sudoku[7][3]=8;
+		Sudoku[5][1]=4; Sudoku[0][4]=8;
+		Sudoku[7][1]=9; Sudoku[3][4]=9; 
+		Sudoku[2][2]=6; Sudoku[5][4]=3;
+		Sudoku[3][2]=3; Sudoku[8][4]=2;
+		Sudoku[4][2]=2; Sudoku[1][5]=1;
+		Sudoku[7][2]=1; Sudoku[6][5]=9;
+		Sudoku[7][5]=5; Sudoku[1][7]=3;
+		Sudoku[1][6]=7; Sudoku[3][7]=7;
+		Sudoku[4][6]=4; Sudoku[4][7]=1;
+		Sudoku[5][6]=5; Sudoku[2][8]=8;
+		Sudoku[6][6]=8; Sudoku[7][8]=4;
 		
-		//We fill in some numbers, the cells still containing a zero are the cells that the solver has to fill in
-		Sudoku[1][0]=8;         Sudoku[1][3]=9;
-		Sudoku[6][0]=2;         Sudoku[2][3]=7;
-		Sudoku[4][1]=8;         Sudoku[7][3]=8;   
-		Sudoku[5][1]=4;         Sudoku[0][4]=8;
-		Sudoku[7][1]=9;         Sudoku[3][4]=9;   
-		Sudoku[2][2]=6;         Sudoku[5][4]=3;
-		Sudoku[3][2]=3;         Sudoku[8][4]=2;
-		Sudoku[4][2]=2;         Sudoku[1][5]=1;
-		Sudoku[7][2]=1;         Sudoku[6][5]=9;
-		Sudoku[7][5]=5;         Sudoku[1][7]=3;
-		Sudoku[1][6]=7;         Sudoku[3][7]=7;
-		Sudoku[4][6]=4;         Sudoku[4][7]=1;
-		Sudoku[5][6]=5;         Sudoku[2][8]=8;
-		Sudoku[6][6]=8;         Sudoku[7][8]=4;
-	
-	
-		//printing the unsolved Sudoku
-		System.out.println( "The unsolved Sudoku: " );
 		
+		//uitprinten van de niet opgeloste sudoku
+		System.out.println( "De onopgeloste sudoku " );
 		System.out.println( " ----------- " );
 		for(int i=0; i<3; i++){
-			System.out.println("|"+ Sudoku[0][i]+ Sudoku[1][i]+ Sudoku[2][i]+ "|"+ Sudoku[3][i]+ Sudoku[4][i]+ Sudoku[5][i]+"|"+ Sudoku[6][i]+ Sudoku[7][i]+ Sudoku[8][i]+"|");
+			System.out.println("|"+ Sudoku[i][0]+ Sudoku[i][1]+ Sudoku[i][2]+
+			"|"+ Sudoku[i][3]+ Sudoku[i][4]+ Sudoku[i][5]+"|"+ Sudoku[i][6]+
+			Sudoku[i][7]+ Sudoku[i][8]+"|");
 		}
-		
 		System.out.println( " ----------- " );
 		for(int i=3; i<6; i++){
-		      	System.out.println("|"+ Sudoku[0][i]+ Sudoku[1][i]+ Sudoku[2][i]+ "|"+ Sudoku[3][i]+ Sudoku[4][i]+ Sudoku[5][i]+"|"+ Sudoku[6][i]+ Sudoku[7][i]+ Sudoku[8][i]+"|");
+			System.out.println("|"+ Sudoku[i][0]+ Sudoku[i][1]+ Sudoku[i][2]+
+			"|"+ Sudoku[i][3]+ Sudoku[i][4]+ Sudoku[i][5]+"|"+ Sudoku[i][6]+
+			Sudoku[i][7]+ Sudoku[i][8]+"|");
 		}
-		
 		System.out.println( " ----------- " );
-		for(int i=6; i<9; i++){
-		      	System.out.println("|"+ Sudoku[0][i]+ Sudoku[1][i]+ Sudoku[2][i]+ "|"+ Sudoku[3][i]+ Sudoku[4][i]+ Sudoku[5][i]+"|"+ Sudoku[6][i]+ Sudoku[7][i]+ Sudoku[8][i]+"|");
+			for(int i=6; i<9; i++){
+			System.out.println("|"+ Sudoku[i][0]+ Sudoku[i][1]+ Sudoku[i][2]+
+			"|"+ Sudoku[i][3]+ Sudoku[i][4]+ Sudoku[i][5]+"|"+ Sudoku[i][6]+
+			Sudoku[i][7]+ Sudoku[i][8]+"|");
 		}
 		System.out.println( " ----------- " );
 	}
-	
-	//We'll solve the Sudoku with backtracking now, it stops until there's been thrown an exception
-	public void solver(int col, int row) throws RuntimeException{
-	
-	//Now the Sudoku is ready, so we print it and stop the backtracking:
-		if( row > 8 ){
-	      		System.out.println( " ----------- " );
-	    		for(int i=0; i<3; i++){
-	      			System.out.println("|"+ Sudoku[0][i]+ Sudoku[1][i]+ Sudoku[2][i]+ "|"+ Sudoku[3][i]+ Sudoku[4][i]+ Sudoku[5][i]+"|"+ Sudoku[6][i]+ Sudoku[7][i]+ Sudoku[8][i]+"|");
-	    		}
-	    		System.out.println( " ----------- " );
-	    		for(int i=3; i<6; i++){
-	      			System.out.println("|"+ Sudoku[0][i]+ Sudoku[1][i]+ Sudoku[2][i]+ "|"+ Sudoku[3][i]+ Sudoku[4][i]+ Sudoku[5][i]+"|"+ Sudoku[6][i]+ Sudoku[7][i]+ Sudoku[8][i]+"|");
-	    		}
-	    		System.out.println( " ----------- " );
-	    		for(int i=6; i<9; i++){
-	      			System.out.println("|"+ Sudoku[0][i]+ Sudoku[1][i]+ Sudoku[2][i]+ "|"+ Sudoku[3][i]+ Sudoku[4][i]+ Sudoku[5][i]+"|"+ Sudoku[6][i]+ Sudoku[7][i]+ Sudoku[8][i]+"|");
-	    		}
-	    		System.out.println( " ----------- " );
-	      		throw new RuntimeException("opgelost!");
-	    	}
-
-	    	//We check if the cell is empty
-	    	if(Sudoku[col][row]==0){
-	      	//Hier worden alle mogelijkheden nagegaan, beginnend bij 1
-	      		for(int i=1; i<10; i++){
-	        		//System.out.println("check" + i + "rij" + row + "col" + col + GridOk(col, row,i));
-	        		//Hier wordt nagegeaan of i aan de standaardeisen voldoet.
-	        		if(ColOk(col,i) && RowOk(row,i) && GridOk(col, row,i)){
-	          			Sudoku[col][row]=i;
-	          			//Getal is ingevuld nu volgende positie bekijken.
-	          			if(col<8){
-	            				solver(col+1,row);
-	          			}
-	          			else{
-	            				solver(0,row+1);
-	          			}
-	        		}
-	      		}
-	      		Sudoku[col][row]=0;
-	    	}
-	    	//We move to the next position if the previous is filled
-	    	else{
-	      		if(col<8){
-	        		solver(col+1,row);
-	      		}
-	      		else{
-	        		solver(0,row+1);
-	      		}
-	    	}
-	  }
-
-	
-	
-}
-	
 	
