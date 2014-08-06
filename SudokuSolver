@@ -64,3 +64,188 @@ public class SudokuSolver{
 		System.out.println( " ----------- " );
 	}
 	
+		
+	//Hier wordt de Sudoku door backtracking opgelost, de methode stopt door een exception.
+	public void solver(int col, int row) throws RuntimeException{
+	//Nu is de Sudoku klaar printen we hem uit en stoppen de backtracking:
+		if( row > 8 ){
+			System.out.println( " ----------- " );
+			
+			for(int i=0; i<3; i++){
+				System.out.println("|"+ Sudoku[i][0]+ Sudoku[i][1]+ Sudoku[i][2]+
+				"|"+ Sudoku[i][3]+ Sudoku[i][4]+ Sudoku[i][5]+"|"+ Sudoku[i][6]+
+				Sudoku[i][7]+ Sudoku[i][8]+"|");
+			}
+			System.out.println( " ----------- " );
+			
+			for(int i=3; i<6; i++){
+				System.out.println("|"+ Sudoku[i][0]+ Sudoku[i][1]+ Sudoku[i][2]+
+				"|"+ Sudoku[i][3]+ Sudoku[i][4]+ Sudoku[i][5]+"|"+ Sudoku[i][6]+
+				Sudoku[i][7]+ Sudoku[i][8]+"|");
+			}
+			System.out.println( " ----------- " );
+			
+			for(int i=6; i<9; i++){
+				System.out.println("|"+ Sudoku[i][0]+ Sudoku[i][1]+ Sudoku[i][2]+
+				"|"+ Sudoku[i][3]+ Sudoku[i][4]+ Sudoku[i][5]+"|"+ Sudoku[i][6]+
+				Sudoku[i][7]+ Sudoku[i][8]+"|");
+			}
+			
+			System.out.println( " ----------- " );
+			throw new RuntimeException("opgelost!");
+		}
+		
+		//Hier wordt gecheckt of de plek leeg is
+		if(Sudoku[col][row]==0){
+			//Hier worden alle mogelijkheden nagegaan, beginnend bij 1
+			for(int i=1; i<10; i++){
+				//System.out.println("check" + i + "rij" + row + "col" + col +
+				GridOk(col, row,i);
+				//Hier wordt nagegeaan of i aan de standaardeisen voldoet.
+				if(ColOk(col,i) && RowOk(row,i) && GridOk(col, row,i)){
+					Sudoku[col][row]=i;
+					//Getal is ingevuld nu volgende positie bekijken.
+					if(col<8){
+						solver(col+1,row);
+					}
+					else{
+						solver(0,row+1);
+					}
+				}
+			}
+		Sudoku[col][row]=0;
+		}
+		
+		//Hier wordt naar de volgende gegaan omdat de positie al is ingevuld
+		else{
+			if(col<8){
+				solver(col+1,row);
+			}
+			else{
+				solver(0,row+1);
+			}
+		}
+	}
+	
+	//Hier wordt gecheckt of het getal i niet al in de kolom zit, retouneert true als het getal niet in de kolom zit.
+	public boolean ColOk(int col,int i){
+		for(int j=0; j<9; j++){
+			if(Sudoku[col][j]==i){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//Hier wordt gecheckt of het getal i niet al in de rij zit, retouneert true als het getal niet in de rij zit.
+	public boolean RowOk(int row,int i){
+		for(int j=0; j<9; j++){
+			if(Sudoku[j][row]==i){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	//Hier wordt gecheckt of het getal i niet al in de subgrid zit, retouneert true als het getal niet in de grid zit.
+	public boolean GridOk(int col, int row, int i){
+		if(col<3){
+			if(row<3){
+				for(int j=0; j<3; j++){
+					for(int k=0; k<3; k++){
+						if(Sudoku[j][k]==i){
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			else if(row<6){
+				for(int j=0; j<3; j++){
+					for(int k=3; k<6; k++){
+						if(Sudoku[j][k]==i){
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			else{
+				for(int j=0; j<3; j++){
+					for(int k=6; k<9; k++){
+						if(Sudoku[j][k]==i){
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+		}
+		else if(col<6){
+			if(row<3){
+				for(int j=3; j<6; j++){
+					for(int k=0; k<3; k++){
+						if(Sudoku[j][k]==i){
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			else if(row<6){
+				for(int j=3; j<6; j++){
+					for(int k=3; k<6; k++){
+						if(Sudoku[j][k]==i){
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			else{
+				for(int j=3; j<6; j++){
+					for(int k=6; k<9; k++){
+						if(Sudoku[j][k]==i){
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+		}
+		else{
+			if(row<3){
+				for(int j=6; j<9; j++){
+					for(int k=0; k<3; k++){
+						if(Sudoku[j][k]==i){
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			else if(row<6){
+				for(int j=6; j<9; j++){
+					for(int k=3; k<6; k++){
+						if(Sudoku[j][k]==i){
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			else{
+				for(int j=6; j<9; j++){
+					for(int k=6; k<9; k++){
+						if(Sudoku[j][k]==i){
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+		}
+	}
+
+}
