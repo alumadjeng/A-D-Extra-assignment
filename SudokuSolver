@@ -1,7 +1,3 @@
-import java.io.*;
-import java.util.*;
-import java.lang.Character;
-
 public class SudokuSolver{
 
 	private int[][] Sudoku=new int[15][15];
@@ -27,7 +23,7 @@ public class SudokuSolver{
 		//Vervolgens vullen we een paar cijfers in, de plekken waar er nul blijft staan, zijn de plekken die nog ingevuld moeten worden door de solver
 		Sudoku[1][0]=8; Sudoku[1][3]=9;
 		Sudoku[6][0]=2; Sudoku[2][3]=7;
-		Sudoku[4][1]=8; Sudoku[7][3]=8;
+		Sudoku[4][1]=8; Sudoku[7][3]=8; 
 		Sudoku[5][1]=4; Sudoku[0][4]=8;
 		Sudoku[7][1]=9; Sudoku[3][4]=9; 
 		Sudoku[2][2]=6; Sudoku[5][4]=3;
@@ -64,7 +60,7 @@ public class SudokuSolver{
 		System.out.println( " ----------- " );
 	}
 	
-		
+	
 	//Hier wordt de Sudoku door backtracking opgelost, de methode stopt door een exception.
 	public void solver(int col, int row) throws RuntimeException{
 	//Nu is de Sudoku klaar printen we hem uit en stoppen de backtracking:
@@ -87,7 +83,7 @@ public class SudokuSolver{
 			
 			for(int i=6; i<9; i++){
 				System.out.println("|"+ Sudoku[i][0]+ Sudoku[i][1]+ Sudoku[i][2]+
-				"|"+ Sudoku[i][3]+ Sudoku[i][4]+ Sudoku[i][5]+"|"+ Sudoku[i][6]+
+				"|"+ Sudoku[i][3]+ Sudoku[4][i]+ Sudoku[5][i]+"|"+ Sudoku[6][i]+
 				Sudoku[i][7]+ Sudoku[i][8]+"|");
 			}
 			
@@ -96,14 +92,14 @@ public class SudokuSolver{
 		}
 		
 		//Hier wordt gecheckt of de plek leeg is
-		if(Sudoku[col][row]==0){
+		if(Sudoku[row][col]==0){
 			//Hier worden alle mogelijkheden nagegaan, beginnend bij 1
 			for(int i=1; i<10; i++){
 				//System.out.println("check" + i + "rij" + row + "col" + col +
-				GridOk(col, row,i);
+				GridOk(row, col,i);
 				//Hier wordt nagegeaan of i aan de standaardeisen voldoet.
-				if(ColOk(col,i) && RowOk(row,i) && GridOk(col, row,i)){
-					Sudoku[col][row]=i;
+				if(ColOk(col,i) && RowOk(row,i) && GridOk(row, col,i)){
+					Sudoku[row][col]=i;
 					//Getal is ingevuld nu volgende positie bekijken.
 					if(col<8){
 						solver(col+1,row);
@@ -113,7 +109,7 @@ public class SudokuSolver{
 					}
 				}
 			}
-		Sudoku[col][row]=0;
+		Sudoku[row][col]=0;
 		}
 		
 		//Hier wordt naar de volgende gegaan omdat de positie al is ingevuld
@@ -128,9 +124,9 @@ public class SudokuSolver{
 	}
 	
 	//Hier wordt gecheckt of het getal i niet al in de kolom zit, retouneert true als het getal niet in de kolom zit.
-	public boolean ColOk(int col,int i){
+	public boolean RowOk(int row,int i){
 		for(int j=0; j<9; j++){
-			if(Sudoku[col][j]==i){
+			if(Sudoku[row][j]==i){
 				return false;
 			}
 		}
@@ -138,9 +134,9 @@ public class SudokuSolver{
 	}
 	
 	//Hier wordt gecheckt of het getal i niet al in de rij zit, retouneert true als het getal niet in de rij zit.
-	public boolean RowOk(int row,int i){
+	public boolean ColOk(int col,int i){
 		for(int j=0; j<9; j++){
-			if(Sudoku[j][row]==i){
+			if(Sudoku[j][col]==i){
 				return false;
 			}
 		}
@@ -149,12 +145,12 @@ public class SudokuSolver{
 	
 	
 	//Hier wordt gecheckt of het getal i niet al in de subgrid zit, retouneert true als het getal niet in de grid zit.
-	public boolean GridOk(int col, int row, int i){
+	public boolean GridOk(int row, int col, int i){
 		if(col<3){
 			if(row<3){
 				for(int j=0; j<3; j++){
 					for(int k=0; k<3; k++){
-						if(Sudoku[j][k]==i){
+						if(Sudoku[k][j]==i){
 							return false;
 						}
 					}
@@ -164,7 +160,7 @@ public class SudokuSolver{
 			else if(row<6){
 				for(int j=0; j<3; j++){
 					for(int k=3; k<6; k++){
-						if(Sudoku[j][k]==i){
+						if(Sudoku[k][j]==i){
 							return false;
 						}
 					}
@@ -174,7 +170,7 @@ public class SudokuSolver{
 			else{
 				for(int j=0; j<3; j++){
 					for(int k=6; k<9; k++){
-						if(Sudoku[j][k]==i){
+						if(Sudoku[k][j]==i){
 							return false;
 						}
 					}
@@ -186,7 +182,7 @@ public class SudokuSolver{
 			if(row<3){
 				for(int j=3; j<6; j++){
 					for(int k=0; k<3; k++){
-						if(Sudoku[j][k]==i){
+						if(Sudoku[k][j]==i){
 							return false;
 						}
 					}
@@ -196,7 +192,7 @@ public class SudokuSolver{
 			else if(row<6){
 				for(int j=3; j<6; j++){
 					for(int k=3; k<6; k++){
-						if(Sudoku[j][k]==i){
+						if(Sudoku[k][j]==i){
 							return false;
 						}
 					}
@@ -206,7 +202,7 @@ public class SudokuSolver{
 			else{
 				for(int j=3; j<6; j++){
 					for(int k=6; k<9; k++){
-						if(Sudoku[j][k]==i){
+						if(Sudoku[k][j]==i){
 							return false;
 						}
 					}
@@ -218,7 +214,7 @@ public class SudokuSolver{
 			if(row<3){
 				for(int j=6; j<9; j++){
 					for(int k=0; k<3; k++){
-						if(Sudoku[j][k]==i){
+						if(Sudoku[k][j]==i){
 							return false;
 						}
 					}
@@ -228,7 +224,7 @@ public class SudokuSolver{
 			else if(row<6){
 				for(int j=6; j<9; j++){
 					for(int k=3; k<6; k++){
-						if(Sudoku[j][k]==i){
+						if(Sudoku[k][j]==i){
 							return false;
 						}
 					}
@@ -238,7 +234,7 @@ public class SudokuSolver{
 			else{
 				for(int j=6; j<9; j++){
 					for(int k=6; k<9; k++){
-						if(Sudoku[j][k]==i){
+						if(Sudoku[k][j]==i){
 							return false;
 						}
 					}
