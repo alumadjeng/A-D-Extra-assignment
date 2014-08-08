@@ -12,6 +12,7 @@ public class SudokuSolver{
 	
 	}
 
+	//methode voor het maken van een onopgeloste Sudoku
 	public SudokuSolver(){
 		
 		//Eerst wordt de Sudoku gevuld met nullen
@@ -95,8 +96,6 @@ public class SudokuSolver{
 		if(Sudoku[row][col]==0){
 			//Hier worden alle mogelijkheden nagegaan, beginnend bij 1
 			for(int i=1; i<10; i++){
-				//System.out.println("check" + i + "rij" + row + "col" + col +
-				GridOk(row, col,i);
 				//Hier wordt nagegeaan of i aan de standaardeisen voldoet.
 				if(ColOk(col,i) && RowOk(row,i) && GridOk(row, col,i)){
 					Sudoku[row][col]=i;
