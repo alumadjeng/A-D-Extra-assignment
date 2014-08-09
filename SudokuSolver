@@ -125,7 +125,7 @@ public class SudokuSolver{
 	}
 	
 	//Methode om te kijken of integer i niet al in de rij zit 
-	//Retouneert true als het getal niet in de kolom zit.
+	//Retouneert true als het getal niet in de rij zit.
 	public boolean RowOk(int row,int i){
 		for(int j=0; j<9; j++){
 			if(Sudoku[row][j]==i){
@@ -136,7 +136,7 @@ public class SudokuSolver{
 	}
 	
 	//Methode om te kijken of integer i niet al in de kolom zit
-	//Retouneert true als het getal niet in de rij zit.
+	//Retouneert true als het getal niet in de kolom zit.
 	public boolean ColOk(int col,int i){
 		for(int j=0; j<9; j++){
 			if(Sudoku[j][col]==i){
@@ -148,7 +148,7 @@ public class SudokuSolver{
 	
 	
 	//Methode om te kijken of getal i niet al in de subgrid zit
-	//Retouneert true als het getal niet in de grid zit.
+	//Retouneert true als het getal niet in de subgrid zit.
 	public boolean GridOk(int row, int col, int i){
 		if(col<3){
 			if(row<3){
